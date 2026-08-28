@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="hy">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Զամբյուղ — Մի Հատիկ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Armenian:wght@500;600;700;800;900&family=Noto+Sans+Armenian:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --soil-950:#140d06;
+    --soil-900:#22160a;
+    --soil-800:#3a2712;
+
+    --parchment:#ece0bf;
+    --parchment-soft:#f8f1de;
+    --paper:#fbf6e6;
+    --card:#ecdfb9;
+
+    --wheat-200:#f4dea3;
+    --wheat-300:#eecb7c;
+    --wheat-500:#c98f2e;
+    --wheat-700:#8f5e19;
+    --rust-600:#a13d1d;
+    --rust-700:#7a2f18;
+    --sage-600:#57663c;
+
+    --ink:#221a0f;
+    --ink-soft:#4a3823;
+    --cream:#faf3e2;
+    --muted:#8a7a5c;
+    --line:rgba(201,143,46,0.35);
+    --line-dark:rgba(238,203,124,0.16);
+
+    --font-display:'Noto Serif Armenian', serif;
+    --font-body:'Noto Sans Armenian', sans-serif;
+
+    --radius-lg:26px;
+    --radius-md:16px;
+    --shadow-soft:0 26px 50px -26px rgba(14,9,3,0.55);
+    --shadow-pop:0 18px 30px -14px rgba(14,9,3,0.4);
+    --ease:cubic-bezier(.19,1,.22,1);
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--parchment);
+    background-image:radial-gradient(circle at 1px 1px, rgba(74,56,35,0.07) 1px, transparent 0);
+    background-size:24px 24px;
+    color:var(--ink);
+    font-family:var(--font-body);
+    -webkit-font-smoothing:antialiased;
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+  }
+  a{ color:inherit; text-decoration:none; }
+  ::selection{ background:var(--wheat-300); color:var(--soil-950); }
+
+  /* ---------- Header ---------- */
+  .site-header{
+    background:rgba(20,13,6,0.92);
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:16px 40px;
+    position:sticky;
+    top:0;
+    z-index:50;
+    border-bottom:1px solid var(--line-dark);
+  }
+  .brand{ display:flex; align-items:center; gap:10px; }
+  .brand-mark{
+    width:20px; height:30px; color:var(--wheat-500); flex-shrink:0;
+    transform-origin:50% 90%; animation:sway 6s ease-in-out infinite;
+  }
+  @keyframes sway{ 0%,100%{transform:rotate(-2.5deg);} 50%{transform:rotate(2.5deg);} }
+  .brand-word{ font-family:var(--font-display); font-weight:700; font-size:19px; color:var(--cream); }
+
+  nav{ display:flex; align-items:center; gap:8px; }
+  nav a{
+    color:var(--parchment-soft);
+    font-weight:600;
+    font-size:15px;
+    padding:8px 14px;
+    border-radius:999px;
+    transition:color .2s ease, background-color .2s ease;
+  }
+  nav a:hover{ background:rgba(238,203,124,0.12); color:var(--wheat-300); }
+  .navZambyux{ color:var(--soil-950) !important; background:var(--wheat-300); }
+
+  /* ---------- Banner ---------- */
+  .delivery-banner{
+    background:var(--soil-900);
+    color:var(--wheat-200);
+    border-bottom:2px solid var(--wheat-500);
+    padding:14px 20px;
+    text-align:center;
+    font-size:14.5px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+  }
+  .delivery-banner svg{ width:22px; height:22px; fill:none; stroke:var(--wheat-300); stroke-width:2; flex-shrink:0; }
+  .delivery-banner b{ color:var(--cream); }
+
+  /* ---------- Main Layout ---------- */
+  main{
+    max-width:1000px;
+    width:100%;
+    margin:0 auto;
+    padding:40px 24px 80px;
+    flex:1;
+  }
+
+  .page-title{
+    font-family:var(--font-display);
+    font-size:clamp(28px, 4vw, 40px);
+    margin:0 0 8px;
+    text-align:center;
+  }
+  .page-sub{
+    text-align:center;
+    color:var(--muted);
+    margin:0 0 36px;
+    font-size:15px;
+  }
+
+  .cart-container{
+    display:grid;
+    grid-template-columns:1.4fr 1fr;
+    gap:32px;
+    align-items:start;
+  }
+
+  @media (max-width:820px){
+    .cart-container{ grid-template-columns:1fr; }
+  }
+
+  /* ---------- Cart Items Table / List ---------- */
+  .cart-box{
+    background:var(--paper);
+    border:1px solid var(--line);
+    border-radius:var(--radius-md);
+    padding:24px;
+    box-shadow:var(--shadow-pop);
+  }
+
+  .cart-item{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:16px;
+    padding:16px 0;
+    border-bottom:1px dashed var(--line);
+  }
+  .cart-item:last-child{ border-bottom:none; }
+
+  .item-info{ flex:1; }
+  .item-title{ font-family:var(--font-display); font-weight:700; font-size:17px; margin:0 0 4px; }
+  .item-price-unit{ font-size:13px; color:var(--muted); }
+
+  .stepper{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    background:var(--parchment-soft);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:4px;
+  }
+  .stepper button{
+    width:28px; height:28px;
+    border:none;
+    background:var(--sage-600);
+    color:var(--cream);
+    font-size:16px;
+    border-radius:6px;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .stepper button:hover{ background:#485631; }
+  .stepper .qty{ font-weight:700; font-size:14px; min-width:48px; text-align:center; }
+
+  .item-total{ font-family:var(--font-display); font-weight:700; font-size:16px; white-space:nowrap; }
+
+  .btn-remove{
+    background:none;
+    border:none;
+    color:var(--rust-600);
+    cursor:pointer;
+    padding:4px;
+    border-radius:6px;
+    transition:background-color .2s;
+  }
+  .btn-remove:hover{ background:rgba(161,61,29,0.1); }
+
+  .empty-cart{
+    text-align:center;
+    padding:48px 20px;
+    color:var(--muted);
+  }
+  .empty-cart svg{ width:64px; height:64px; stroke:var(--muted); stroke-width:1.5; fill:none; margin-bottom:16px; }
+  .empty-cart p{ font-size:17px; margin:0 0 20px; }
+  .btn-shop{
+    display:inline-block;
+    background:var(--wheat-500);
+    color:var(--soil-950);
+    font-weight:700;
+    padding:12px 24px;
+    border-radius:999px;
+  }
+
+  /* ---------- Order Form ---------- */
+  .order-box{
+    background:var(--paper);
+    border:1px solid var(--line);
+    border-radius:var(--radius-md);
+    padding:24px;
+    box-shadow:var(--shadow-pop);
+    position:sticky;
+    top:90px;
+  }
+
+  .order-box h2{
+    font-family:var(--font-display);
+    font-size:20px;
+    margin:0 0 18px;
+    border-bottom:1px solid var(--line);
+    padding-bottom:10px;
+  }
+
+  .form-group{ margin-bottom:14px; }
+  .form-group label{
+    display:block;
+    font-size:13px;
+    font-weight:600;
+    margin-bottom:6px;
+    color:var(--ink-soft);
+  }
+  .form-group input, .form-group select, .form-group textarea{
+    width:100%;
+    padding:10px 12px;
+    border:1px solid var(--line);
+    border-radius:8px;
+    background:var(--parchment-soft);
+    font-family:var(--font-body);
+    font-size:14px;
+    color:var(--ink);
+    outline:none;
+  }
+  .form-group input:focus, .form-group select:focus, .form-group textarea:focus{
+    border-color:var(--wheat-500);
+    box-shadow:0 0 0 2px rgba(201,143,46,0.2);
+  }
+
+  .summary-row{
+    display:flex;
+    justify-content:space-between;
+    font-size:14px;
+    margin-bottom:8px;
+    color:var(--muted);
+  }
+  .summary-row.total{
+    font-family:var(--font-display);
+    font-size:19px;
+    font-weight:700;
+    color:var(--ink);
+    border-top:1px dashed var(--line);
+    padding-top:12px;
+    margin-top:12px;
+    margin-bottom:20px;
+  }
+
+  .btn-submit{
+    width:100%;
+    background:var(--rust-600);
+    color:var(--cream);
+    border:none;
+    padding:14px;
+    border-radius:10px;
+    font-family:var(--font-body);
+    font-weight:700;
+    font-size:15px;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    transition:background-color .2s ease, transform .15s ease;
+  }
+  .btn-submit:hover{ background:var(--rust-700); transform:translateY(-2px); }
+  .btn-submit:disabled{ background:#8a7a5c; cursor:not-allowed; transform:none; }
+
+  /* ---------- Footer ---------- */
+  .site-footer{
+    background:var(--soil-950);
+    color:var(--parchment-soft);
+    padding:40px 40px 24px;
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:24px;
+    flex-wrap:wrap;
+    margin-top:auto;
+  }
+  .footer-brand{ display:flex; align-items:center; gap:10px; }
+  .footer-brand span{ font-family:var(--font-display); font-weight:700; color:var(--cream); font-size:18px; }
+  .footer-links{ display:flex; gap:26px; flex-wrap:wrap; }
+  .footer-links a{ color:var(--parchment-soft); font-size:14px; font-weight:600; }
+  .footer-copy{
+    width:100%;
+    margin-top:20px;
+    padding-top:16px;
+    border-top:1px solid rgba(238,229,204,0.12);
+    font-size:12.5px;
+    color:rgba(238,229,204,0.55);
+    text-align:center;
+  }
+</style>
+</head>
+<body>
+
+    <header class="site-header">
+        <a href="glxavorr.miHatik.html" class="brand">
+            <svg class="brand-mark" viewBox="0 0 24 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M12 2C18 8 20 17 18 25C16 33 12 35 12 35C12 35 8 33 6 25C4 17 6 8 12 2Z" fill="currentColor"/>
+                <path d="M12 5V32" stroke="#140d06" stroke-width="1.1" opacity="0.45"/>
+            </svg>
+            <span class="brand-word">Մի Հատիկ</span>
+        </a>
+        <nav>
+            <a href="glxavorr.miHatik.html">Գլխավոր</a>
+            <a href="xanut.miHatik.html">Խանութ</a>
+            <a href="zambyux.miHatik.html" class="navZambyux">Զամբյուղ</a>
+            <a href="merMasin.miHatik.html">Մեր մասին</a>
+        </nav>
+    </header>
+
+    <div class="delivery-banner">
+        <svg viewBox="0 0 24 24"><path d="M1 3h15v13H1zM16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+        <span><b>ԱՆՎՃԱՐ ԱՌԱՔՈՒՄ</b> — Գործում է միայն <b>Երևանում</b> և <b>Արմավիրի մարզում</b>:</span>
+    </div>
+
+    <main>
+        <h1 class="page-title">Ձեր Զամբյուղը</h1>
+        <p class="page-sub">Ստուգեք ապրանքները և լրացրեք տվյալները պատվերը հաստատելու համար</p>
+
+        <div id="cartContent" class="cart-container">
+            <!-- Rendered by JS -->
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-brand">
+            <svg class="brand-mark" viewBox="0 0 24 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="width:20px;height:30px;color:var(--wheat-500);">
+                <path d="M12 2C18 8 20 17 18 25C16 33 12 35 12 35C12 35 8 33 6 25C4 17 6 8 12 2Z" fill="currentColor"/>
+            </svg>
+            <span>Մի Հատիկ</span>
+        </div>
+        <nav class="footer-links">
+            <a href="glxavorr.miHatik.html">Գլխավոր</a>
+            <a href="xanut.miHatik.html">Խանութ</a>
+            <a href="merMasin.miHatik.html">Մեր մասին</a>
+        </nav>
+        <p class="footer-copy">«Էկո Հատիկ» ՍՊԸ · Հիմնադրված 2012 թ. · © 2026 Բոլոր իրավունքները պաշտպանված են</p>
+    </footer>
+
+<script>
+  const PRODUCTS = [
+    { id:'basmati', name:'Բրինձ Բասմաթի', price:1400 },
+    { id:'vosp',    name:'Կարմիր Ոսպ',     price:510  },
+    { id:'blxur',   name:'Բլղուր',         price:500  },
+    { id:'dzavar',  name:'Ձավար',          price:800  },
+    { id:'hachar',  name:'Հաճար',          price:1600 },
+    { id:'poxinc',  name:'Փոխինձ',         price:400  },
+    { id:'lobi',    name:'Լոբի',           price:490  },
+  ];
+
+  const PHONE_NUMBER = '37491646424'; // WhatsApp target number
+  const STEP = 0.5;
+
+  // Load cart from LocalStorage
+  let cart = JSON.parse(localStorage.getItem('mihatik_cart') || '{}');
+
+  function saveCart(){
+    localStorage.setItem('mihatik_cart', JSON.stringify(cart));
+  }
+
+  function fmt(n){
+    return n.toLocaleString('hy-AM', { maximumFractionDigits: 2 });
+  }
+
+  function getCartTotal(){
+    return Object.entries(cart).reduce((sum, [id, kg]) => {
+      const p = PRODUCTS.find(x => x.id === id);
+      return sum + (p ? kg * p.price : 0);
+    }, 0);
+  }
+
+  function updateQty(id, delta){
+    if(!cart[id]) return;
+    cart[id] = Math.max(STEP, parseFloat((cart[id] + delta * STEP).toFixed(2)));
+    saveCart();
+    render();
+  }
+
+  function removeItem(id){
+    delete cart[id];
+    saveCart();
+    render();
+  }
+
+  function render(){
+    const container = document.getElementById('cartContent');
+    const ids = Object.keys(cart);
+
+    if(ids.length === 0){
+      container.style.gridTemplateColumns = '1fr';
+      container.innerHTML = `
+        <div class="empty-cart">
+          <svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+          <p>Ձեր զամբյուղը դատարկ է</p>
+          <a href="xanut.miHatik.html" class="btn-shop">Անցնել Խանութ</a>
+        </div>`;
+      return;
+    }
+
+    container.style.gridTemplateColumns = '';
+    const total = getCartTotal();
+
+    let itemsHTML = ids.map(id => {
+      const p = PRODUCTS.find(x => x.id === id);
+      if(!p) return '';
+      const kg = cart[id];
+      const itemTotal = kg * p.price;
+      return `
+        <div class="cart-item">
+          <div class="item-info">
+            <div class="item-title">${p.name}</div>
+            <div class="item-price-unit">${fmt(p.price)} ֏ / կգ</div>
+          </div>
+          <div class="stepper">
+            <button onclick="updateQty('${id}', -1)">−</button>
+            <div class="qty">${fmt(kg)} կգ</div>
+            <button onclick="updateQty('${id}', 1)">+</button>
+          </div>
+          <div class="item-total">${fmt(itemTotal)} ֏</div>
+          <button class="btn-remove" onclick="removeItem('${id}')" title="Հեռացնել">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+          </button>
+        </div>`;
+    }).join('');
+
+    container.innerHTML = `
+      <div class="cart-box">
+        ${itemsHTML}
+      </div>
+
+      <div class="order-box">
+        <h2>Պատվերի Ձևակերպում</h2>
+        <form id="orderForm" onsubmit="handleOrder(event)">
+          <div class="form-group">
+            <label for="fname">Անուն *</label>
+            <input type="text" id="fname" required placeholder="օր․ Արմեն">
+          </div>
+          <div class="form-group">
+            <label for="lname">Ազգանուն *</label>
+            <input type="text" id="lname" required placeholder="օր․ Սարգսյան">
+          </div>
+          <div class="form-group">
+            <label for="phone">Հեռախոսահամար *</label>
+            <input type="tel" id="phone" required placeholder="օր․ 091XXXXXX">
+          </div>
+          <div class="form-group">
+            <label for="region">Առաքման Մարզ/Քաղաք *</label>
+            <select id="region" required>
+              <option value="Երևան">Երևան</option>
+              <option value="Արմավիրի մարզ">Արմավիրի մարզ</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="address">Կոնկրետ Տան Հասցե *</label>
+            <input type="text" id="address" required placeholder="օր․ Կենտրոն, Թումանյան փող․ 10, բն․ 4">
+          </div>
+
+          <div class="summary-row">
+            <span>Ապրանքների գումար</span>
+            <span>${fmt(total)} ֏</span>
+          </div>
+          <div class="summary-row">
+            <span>Առաքում</span>
+            <span style="color:var(--sage-600);font-weight:700;">ԱՆՎՃԱՐ</span>
+          </div>
+          <div class="summary-row total">
+            <span>Ընդհանուր</span>
+            <span>${fmt(total)} ֏</span>
+          </div>
+
+          <button type="submit" class="btn-submit">
+            <span>Հաստատել Պատվերը WhatsApp-ով</span>
+          </button>
+        </form>
+      </div>`;
+  }
+
+  function handleOrder(e){
+    e.preventDefault();
+    const fname = document.getElementById('fname').value.trim();
+    const lname = document.getElementById('lname').value.trim();
+    const phone = document.getElementById('phone').value.trim();
+    const region = document.getElementById('region').value;
+    const address = document.getElementById('address').value.trim();
+
+    let msg = `🌾 *ՆՈՐ ՊԱՏՎԵՐ — ՄԻ ՀԱՏԻԿ*\n\n`;
+    msg += `👤 *Գնորդ:* ${fname} ${lname}\n`;
+    msg += `📞 *Հեռախոս:* ${phone}\n`;
+    msg += `📍 *Մարզ/Քաղաք:* ${region}\n`;
+    msg += `🏠 *Հասցե:* ${address}\n\n`;
+    msg += `📦 *Պատվերի ցանկ:* \n`;
+
+    Object.entries(cart).forEach(([id, kg]) => {
+      const p = PRODUCTS.find(x => x.id === id);
+      if(p){
+        msg += `• ${p.name}: ${fmt(kg)} կգ — ${fmt(kg * p.price)} ֏\n`;
+      }
+    });
+
+    msg += `\n🚚 *Առաքում:* Անվճար (${region})\n`;
+    msg += `💰 *Ընդհանուր գումար:* ${fmt(getCartTotal())} ֏`;
+
+    const encoded = encodeURIComponent(msg);
+    window.open(`https://wa.me/${PHONE_NUMBER}?text=${encoded}`, '_blank');
+  }
+
+  render();
+</script>
+</body>
+</html>

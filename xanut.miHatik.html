@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="hy">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Խանութ — Մի Հատիկ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Armenian:wght@500;600;700;800;900&family=Noto+Sans+Armenian:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --soil-950:#140d06;
+    --soil-900:#22160a;
+    --soil-800:#3a2712;
+
+    --parchment:#ece0bf;
+    --parchment-soft:#f8f1de;
+    --paper:#fbf6e6;
+    --card:#ecdfb9;
+
+    --wheat-200:#f4dea3;
+    --wheat-300:#eecb7c;
+    --wheat-500:#c98f2e;
+    --wheat-700:#8f5e19;
+    --rust-600:#a13d1d;
+    --rust-700:#7a2f18;
+    --sage-600:#57663c;
+
+    --ink:#221a0f;
+    --ink-soft:#4a3823;
+    --cream:#faf3e2;
+    --muted:#8a7a5c;
+    --line:rgba(201,143,46,0.35);
+    --line-dark:rgba(238,203,124,0.16);
+
+    --font-display:'Noto Serif Armenian', serif;
+    --font-body:'Noto Sans Armenian', sans-serif;
+
+    --radius-lg:26px;
+    --radius-md:16px;
+    --shadow-soft:0 26px 50px -26px rgba(14,9,3,0.55);
+    --shadow-pop:0 18px 30px -14px rgba(14,9,3,0.4);
+    --ease:cubic-bezier(.19,1,.22,1);
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--parchment);
+    background-image:radial-gradient(circle at 1px 1px, rgba(74,56,35,0.07) 1px, transparent 0);
+    background-size:24px 24px;
+    color:var(--ink);
+    font-family:var(--font-body);
+    -webkit-font-smoothing:antialiased;
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+  }
+  a{ color:inherit; text-decoration:none; }
+  ::selection{ background:var(--wheat-300); color:var(--soil-950); }
+
+  /* Header */
+  .site-header{
+    background:rgba(20,13,6,0.92);
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:16px 40px;
+    position:sticky;
+    top:0;
+    z-index:50;
+    border-bottom:1px solid var(--line-dark);
+  }
+  .brand{ display:flex; align-items:center; gap:10px; }
+  .brand-mark{
+    width:20px; height:30px; color:var(--wheat-500); flex-shrink:0;
+    transform-origin:50% 90%; animation:sway 6s ease-in-out infinite;
+  }
+  @keyframes sway{ 0%,100%{transform:rotate(-2.5deg);} 50%{transform:rotate(2.5deg);} }
+  .brand-word{ font-family:var(--font-display); font-weight:700; font-size:19px; color:var(--cream); }
+
+  nav{ display:flex; align-items:center; gap:8px; }
+  nav a{
+    color:var(--parchment-soft);
+    font-weight:600;
+    font-size:15px;
+    padding:8px 14px;
+    border-radius:999px;
+    transition:color .2s ease, background-color .2s ease;
+  }
+  nav a:hover{ background:rgba(238,203,124,0.12); color:var(--wheat-300); }
+  .navXanut{ color:var(--soil-950) !important; background:var(--wheat-300); }
+
+  /* Banner */
+  .delivery-banner{
+    background:var(--soil-900);
+    color:var(--wheat-200);
+    border-bottom:2px solid var(--wheat-500);
+    padding:12px 20px;
+    text-align:center;
+    font-size:14px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+  }
+  .delivery-banner svg{ width:20px; height:20px; fill:none; stroke:var(--wheat-300); stroke-width:2; flex-shrink:0; }
+  .delivery-banner b{ color:var(--cream); }
+
+  /* Main */
+  main{
+    max-width:1160px;
+    width:100%;
+    margin:0 auto;
+    padding:40px 24px 100px;
+    flex:1;
+  }
+
+  .shop-title{
+    font-family:var(--font-display);
+    font-size:clamp(30px, 4.5vw, 44px);
+    margin:0 0 8px;
+    text-align:center;
+  }
+  .shop-sub{
+    text-align:center;
+    color:var(--muted);
+    margin:0 0 36px;
+    font-size:15.5px;
+  }
+
+  /* Products Grid */
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(280px, 1fr));
+    gap:28px;
+  }
+
+  .card{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:var(--radius-md);
+    padding:20px;
+    display:flex;
+    flex-direction:column;
+    box-shadow:var(--shadow-pop);
+    transition:transform .25s var(--ease), box-shadow .25s var(--ease);
+  }
+  .card:hover{
+    transform:translateY(-4px);
+    box-shadow:0 22px 36px -16px rgba(14,9,3,0.5);
+  }
+
+  .card-img{
+    width:100%;
+    height:auto;
+    max-height:260px;
+    border-radius:12px;
+    object-fit:contain;
+    margin-bottom:16px;
+  }
+
+  .card-name{
+    font-family:var(--font-display);
+    font-weight:700;
+    font-size:20px;
+    margin:0 0 6px;
+  }
+  .card-desc{
+    font-size:13.5px;
+    color:var(--ink-soft);
+    line-height:1.45;
+    margin:0 0 16px;
+    flex:1;
+  }
+
+  .price-tag{
+    font-family:var(--font-display);
+    font-weight:800;
+    font-size:20px;
+    color:var(--rust-600);
+    margin-bottom:14px;
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+  }
+  .price-tag .base-price{
+    font-size:12.5px;
+    font-weight:500;
+    color:var(--muted);
+  }
+
+  /* Stepper */
+  .card-actions{
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+  }
+  .stepper-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    background:var(--parchment-soft);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:6px 10px;
+  }
+  .stepper-label{ font-size:13px; font-weight:600; color:var(--muted); }
+  .stepper{
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  .stepper button{
+    width:30px; height:30px;
+    border:none;
+    background:var(--sage-600);
+    color:var(--cream);
+    font-weight:700;
+    font-size:16px;
+    border-radius:6px;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    transition:background-color .15s;
+  }
+  .stepper button:hover{ background:#485631; }
+  .stepper .val{ font-weight:700; font-size:15px; min-width:54px; text-align:center; }
+
+  .btn-add{
+    width:100%;
+    background:var(--wheat-500);
+    color:var(--soil-950);
+    border:none;
+    padding:12px;
+    border-radius:10px;
+    font-family:var(--font-body);
+    font-weight:700;
+    font-size:14.5px;
+    cursor:pointer;
+    transition:background-color .2s, transform .1s;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+  }
+  .btn-add:hover{ background:var(--wheat-300); }
+  .btn-add:active{ transform:scale(0.98); }
+  .btn-add.added{ background:var(--sage-600); color:var(--cream); }
+
+  /* Floating Cart Bar */
+  .cart-bar{
+    position:fixed;
+    bottom:24px;
+    left:50%;
+    transform:translateX(-50%) translateY(120%);
+    background:var(--soil-950);
+    color:var(--cream);
+    padding:14px 24px;
+    border-radius:999px;
+    border:1px solid var(--wheat-500);
+    box-shadow:0 20px 40px rgba(0,0,0,0.4);
+    display:flex;
+    align-items:center;
+    gap:24px;
+    z-index:100;
+    transition:transform .3s var(--ease);
+  }
+  .cart-bar.active{ transform:translateX(-50%) translateY(0); }
+  .cart-bar-info{ font-size:14.5px; }
+  .cart-bar-info b{ color:var(--wheat-300); }
+  .btn-cart-link{
+    background:var(--rust-600);
+    color:var(--cream);
+    padding:9px 18px;
+    border-radius:999px;
+    font-weight:700;
+    font-size:14px;
+    transition:background-color .2s;
+  }
+  .btn-cart-link:hover{ background:var(--rust-700); }
+
+  /* Footer */
+  .site-footer{
+    background:var(--soil-950);
+    color:var(--parchment-soft);
+    padding:40px 40px 24px;
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:24px;
+    flex-wrap:wrap;
+    margin-top:auto;
+  }
+  .footer-brand{ display:flex; align-items:center; gap:10px; }
+  .footer-brand span{ font-family:var(--font-display); font-weight:700; color:var(--cream); font-size:18px; }
+  .footer-links{ display:flex; gap:26px; flex-wrap:wrap; }
+  .footer-links a{ color:var(--parchment-soft); font-size:14px; font-weight:600; }
+  .footer-copy{
+    width:100%;
+    margin-top:20px;
+    padding-top:16px;
+    border-top:1px solid rgba(238,229,204,0.12);
+    font-size:12.5px;
+    color:rgba(238,229,204,0.55);
+    text-align:center;
+  }
+</style>
+</head>
+<body>
+
+    <header class="site-header">
+        <a href="glxavorr.miHatik.html" class="brand">
+            <svg class="brand-mark" viewBox="0 0 24 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M12 2C18 8 20 17 18 25C16 33 12 35 12 35C12 35 8 33 6 25C4 17 6 8 12 2Z" fill="currentColor"/>
+                <path d="M12 5V32" stroke="#140d06" stroke-width="1.1" opacity="0.45"/>
+            </svg>
+            <span class="brand-word">Մի Հատիկ</span>
+        </a>
+        <nav>
+            <a href="glxavorr.miHatik.html">Գլխավոր</a>
+            <a href="xanut.miHatik.html" class="navXanut">Խանութ</a>
+            <a href="zambyux.miHatik.html">Զամբյուղ</a>
+            <a href="merMasin.miHatik.html">Մեր մասին</a>
+        </nav>
+    </header>
+
+    <div class="delivery-banner">
+        <svg viewBox="0 0 24 24"><path d="M1 3h15v13H1zM16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+        <span><b>ԱՆՎՃԱՐ ԱՌԱՔՈՒՄ</b> — Գործում է միայն <b>Երևանում</b> և <b>Արմավիրի մարզում</b>:</span>
+    </div>
+
+    <main>
+        <h1 class="shop-title">Մեր Ապրանքանին</h1>
+        <p class="shop-sub">Ընտրեք բարձրորակ էկո-արտադրանք և ավելացրեք զամբյուղում</p>
+
+        <div id="productGrid" class="grid"></div>
+    </main>
+
+    <div id="cartBar" class="cart-bar">
+        <div class="cart-bar-info">
+            Զամբյուղում կա <b id="barCount">0</b> ապրանք (<b id="barTotal">0</b> ֏)
+        </div>
+        <a href="zambyux.miHatik.html" class="btn-cart-link">Անցնել Զամբյուղ →</a>
+    </div>
+
+    <footer class="site-footer">
+        <div class="footer-brand">
+            <svg class="brand-mark" viewBox="0 0 24 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="width:20px;height:30px;color:var(--wheat-500);">
+                <path d="M12 2C18 8 20 17 18 25C16 33 12 35 12 35C12 35 8 33 6 25C4 17 6 8 12 2Z" fill="currentColor"/>
+            </svg>
+            <span>Մի Հատիկ</span>
+        </div>
+        <nav class="footer-links">
+            <a href="glxavorr.miHatik.html">Գլխավոր</a>
+            <a href="zambyux.miHatik.html">Զամբյուղ</a>
+            <a href="merMasin.miHatik.html">Մեր մասին</a>
+        </nav>
+        <p class="footer-copy">«Էկո Հատիկ» ՍՊԸ · Հիմնադրված 2012 թ. · © 2026 Բոլոր իրավունքները պաշտպանված են</p>
+    </footer>
+
+<script>
+  const PRODUCTS = [
+    { id:'item_1',  name:'Բլղուր միջին', price:540, desc:'Միջին աղացվածքի որակյալ բլղուր, կատարյալ է ավանդական փլավների, ապուրների և աղցանների համար:', img:'https://i.ibb.co/5gD4327Y/Whats-App-Image-2026-08-28-at-22-34-33.jpg' },
+    { id:'item_2',  name:'Փոխինձ', price:510, desc:'Աղացած, բոված ցորենից պատրաստված ավանդական փոխինձ՝ հարուստ սննդարար նյութերով և վիտամիններով:', img:'https://i.ibb.co/cSDQNQHL/Whats-App-Image-2026-08-28-at-22-34-34-2.jpg' },
+    { id:'item_3',  name:'կարմիր ոսպ', price:620, desc:'Բարձր սպիտակուցային պարունակությամբ արագ եփվող կարմիր ոսպ, իդեալական է ապուր-պյուրեների համար:', img:'https://i.ibb.co/7dc9MdVX/Whats-App-Image-2026-08-28-at-22-34-35-1.jpg' },
+    { id:'item_4',  name:'խոշոր սիսեռ', price:590, desc:'Ընտիր որակի խոշոր հատիկներով սիսեռ, հիանալի է հումուսի, տաք ուտեստների և աղցանների համար:', img:'https://i.ibb.co/VpvhQqKZ/Whats-App-Image-2026-08-28-at-22-34-35.jpg' },
+    { id:'item_5',  name:'ոլոռ դեղին', price:650, desc:'Հարուստ է մանրաթելերով և սպիտակուցներով, իդեալական է հագեցնող դեղին ոլոռով ապուրների համար:', img:'https://i.ibb.co/pjHXj2hk/Whats-App-Image-2026-08-28-at-22-34-36-1.jpg' },
+    { id:'item_6',  name:'ձավար կոտրած', price:530, desc:'Կոտրած ցորենի ձավար, որն ապահովում է արագ պատրաստում և նուրբ տեքստուրա ապուրների մեջ:', img:'https://i.ibb.co/N2sKpsnY/Whats-App-Image-2026-08-28-at-22-34-36-2.jpg' },
+    { id:'item_7',  name:'Ոսպ', price:700, desc:'Բնական և սննդարար կանաչ/դասական ոսպ, պահպանում է ձևը եփելիս և հիանալի է աղցանների համար:', img:'https://i.ibb.co/F4qzdhXT/Whats-App-Image-2026-08-28-at-22-34-36.jpg' },
+    { id:'item_8',  name:'Ձավար', price:570, desc:'Ավանդական հայկական ցորենի ձավար, անվոխարինելի է հարիսայի և ավանդական փլավների համար:', img:'https://i.ibb.co/jkShW6W4/Whats-App-Image-2026-08-28-at-22-34-37-1.jpg' },
+    { id:'item_9', name:'Հաճար', price:610, desc:'Էկոլոգիապես մաքուր հայկական հաճար, ունի յուրահատուկ բույր և կատարյալ է հաճարով փլավի համար:', img:'https://i.ibb.co/sptZ4DLK/Whats-App-Image-2026-08-28-at-22-34-38-1.jpg' },
+    { id:'item_10', name:'Հնդկաձավար', price:660, desc:'Դիետիկ և բնական հնդկաձավար (գրեչկա), հարուստ է երկաթով, վիտամիններով և մանրաթելերով:', img:'https://i.ibb.co/C50N69GR/Whats-App-Image-2026-08-28-at-22-34-38.jpg' },
+    { id:'item_11', name:'Կտավատ', price:580, desc:'Օմեգա-3 ճարպաթթուներով և մանրաթելերով հարուստ կտավատի սերմեր՝ առողջության պահպանման համար:', img:'https://i.ibb.co/QvpKswnq/Whats-App-Image-2026-08-28-at-22-34-40.jpg' },
+    { id:'item_12', name:'Կորեկ հղկված', price:640, desc:'Մաքրված և հղկված ոսկեգույն կորեկ, դյուրամարս է և իդեալական է սննդարար շիլաների համար:', img:'https://i.ibb.co/7JHYCB3z/Whats-App-Image-2026-08-28-at-22-34-42.jpg' },
+    { id:'item_13', name:'Լոբի քարաճիկ', price:690, desc:'Յուրահատուկ տեսակի քարաճիկ լոբի, հարուստ է սպիտակուցներով, կատարյալ է տաք ուտեստների համար:', img:'https://i.ibb.co/nsGGpnQF/Whats-App-Image-2026-08-28-at-22-34-43-1.jpg' },
+    { id:'item_14', name:'Կորեկ', price:550, desc:'Բնական անմշակ կորեկ, հարուստ է հանքանյութերով և B խմբի վիտամիններով:', img:'https://i.ibb.co/LD0Qh8PS/Whats-App-Image-2026-08-28-at-22-34-43.jpg' },
+    { id:'item_15', name:'Լոբի կարմիր', price:630, desc:'Հագեցած համով կարմիր լոբի, իդեալական է ավանդական պասուց տոլմայի, լոբով ապուրների համար:', img:'https://i.ibb.co/YFZnMrn7/Whats-App-Image-2026-08-28-at-22-34-44-1.jpg' },
+    { id:'item_16', name:'Լոբի զալ', price:560, desc:'Ընտիր որակի զալ տեսակի լոբի, աչքի է ընկնում նուրբ համով և փափուկ տեքստուրայով:', img:'https://i.ibb.co/60Fw4WjR/Whats-App-Image-2026-08-28-at-22-34-44.jpg' },
+    { id:'item_17', name:'Գարեձավար', price:670, desc:'Գարուց պատրաստված ավանդական ձավար (կորկոտ), հարուստ է էներգիայով և մանրաթելերով:', img:'https://i.ibb.co/PzGDsB1B/Whats-App-Image-2026-08-28-at-22-34-45-1.jpg' },
+    { id:'item_18', name:'Եգիպտացորեն', price:515, desc:'Բնական եգիպտացորենի հատիկներ, հարմար է եփելու, աղցանների և տարբեր խորտիկների համար:', img:'https://i.ibb.co/k6Qyk5FG/Whats-App-Image-2026-08-28-at-22-34-45.jpg' },
+    { id:'item_19', name:'Բրինձ կլոր', price:605, desc:'Բարձր օսլայայնությամբ կլոր բրինձ, կատարյալ է ապուրների, ռիզոտոյի և կաթնապուրների համար:', img:'https://i.ibb.co/jPRKBqR5/Whats-App-Image-2026-08-28-at-22-34-46.jpg' },
+    { id:'item_20', name:'Բրինձ երկար', price:545, desc:'Փխրուն և չկպչող երկարահատիկ բրինձ, իդեալական է դասական փլավների պատրաստման համար:', img:'https://i.ibb.co/tPYSC5VB/Whats-App-Image-2026-08-28-at-22-34-47.jpg' },
+    { id:'item_21', name:'Բրինձ բասմատի', price:675, desc:'Բարձրակարգ Բասմատի բրինձ՝ երկար հատիկներով և յուրահատուկ արևելյան բույրով:', img:'https://i.ibb.co/qMHj1BGW/Whats-App-Image-2026-08-28-at-22-34-48-1.jpg' },
+    { id:'item_22', name:'Բրինձ դեղին', price:525, desc:'Համեմված/մշակված դեղին բրինձ, որն ապահովում է գեղեցիկ գույն և հարուստ համ փլավների մեջ:', img:'https://i.ibb.co/p68tYMM2/Whats-App-Image-2026-08-28-at-22-34-48.jpg' },
+    { id:'item_23', name:'Բլղուր խոշոր', price:635, desc:'Խոշոր աղացվածքի բլղուր, պահպանում է ցորենի լիարժեք համը, կատարյալ է հագեցնող փլավների համար:', img:'https://i.ibb.co/twgwhzbg/Whats-App-Image-2026-08-28-at-22-34-49.jpg' },
+    { id:'item_24', name:'Բլղուր միջին', price:595, desc:'Բարձրորակ միջին բլղուր՝ ճաշատեսակների բազմազանության և առողջ սննդակարգի համար:', img:'https://i.ibb.co/K79h562v/Whats-App-Image-2026-08-28-at-22-34-33-HD.jpg' }
+  ];
+
+  const STEP = 0.5;
+  const qty = {};
+  PRODUCTS.forEach(p => qty[p.id] = STEP);
+
+  let cart = JSON.parse(localStorage.getItem('mihatik_cart') || '{}');
+
+  function saveCart(){
+    localStorage.setItem('mihatik_cart', JSON.stringify(cart));
+  }
+
+  function fmt(n){
+    return n.toLocaleString('hy-AM', { maximumFractionDigits: 2 });
+  }
+
+  function changeQty(id, delta){
+    const p = PRODUCTS.find(x => x.id === id);
+    if(!p) return;
+
+    qty[id] = Math.max(STEP, parseFloat((qty[id] + delta * STEP).toFixed(2)));
+    
+    document.getElementById(`qty-${id}`).textContent = `${fmt(qty[id])} կգ`;
+    
+    const currentPrice = qty[id] * p.price;
+    document.getElementById(`price-${id}`).textContent = `${fmt(currentPrice)} ֏`;
+  }
+
+  function addToCart(id){
+    cart[id] = (cart[id] || 0) + qty[id];
+    qty[id] = STEP;
+    
+    const p = PRODUCTS.find(x => x.id === id);
+    if(p){
+      document.getElementById(`qty-${id}`).textContent = `${fmt(STEP)} կգ`;
+      document.getElementById(`price-${id}`).textContent = `${fmt(STEP * p.price)} ֏`;
+    }
+
+    saveCart();
+    updateCartBar();
+
+    const btn = document.getElementById(`addbtn-${id}`);
+    if(btn){
+      btn.textContent = 'Ավելացվեց ✓';
+      btn.classList.add('added');
+      setTimeout(()=>{ 
+        btn.textContent = 'Ավելացնել Զամբյուղում'; 
+        btn.classList.remove('added'); 
+      }, 1000);
+    }
+  }
+
+  function updateCartBar(){
+    const ids = Object.keys(cart);
+    const totalCount = ids.length;
+    
+    if(totalCount === 0){
+      document.getElementById('cartBar').classList.remove('active');
+      return;
+    }
+
+    let totalPrice = 0;
+    ids.forEach(id => {
+      const p = PRODUCTS.find(x => x.id === id);
+      if(p) totalPrice += cart[id] * p.price;
+    });
+
+    document.getElementById('barCount').textContent = totalCount;
+    document.getElementById('barTotal').textContent = fmt(totalPrice);
+    document.getElementById('cartBar').classList.add('active');
+  }
+
+  function renderProducts(){
+    const grid = document.getElementById('productGrid');
+    grid.innerHTML = PRODUCTS.map(p => {
+      const initialPrice = qty[p.id] * p.price;
+      return `
+        <div class="card">
+          <img src="${p.img}" alt="${p.name}" class="card-img" loading="lazy">
+          <h3 class="card-name">${p.name}</h3>
+          <p class="card-desc">${p.desc}</p>
+          <div class="price-tag">
+            <span id="price-${p.id}">${fmt(initialPrice)} ֏</span>
+            <span class="base-price">(${fmt(p.price)} ֏/կգ)</span>
+          </div>
+          <div class="card-actions">
+            <div class="stepper-row">
+              <span class="stepper-label">Քանակ:</span>
+              <div class="stepper">
+                <button onclick="changeQty('${p.id}', -1)">−</button>
+                <div class="val" id="qty-${p.id}">${fmt(qty[p.id])} կգ</div>
+                <button onclick="changeQty('${p.id}', 1)">+</button>
+              </div>
+            </div>
+            <button id="addbtn-${p.id}" class="btn-add" onclick="addToCart('${p.id}')">
+              <span>Ավելացնել Զամբյուղում</span>
+            </button>
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  renderProducts();
+  updateCartBar();
+</script>
+</body>
+</html>
